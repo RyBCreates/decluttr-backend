@@ -1,7 +1,5 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
-const {}
-
 // Get User by ID
 const getCurrentUser = (req, res) => {
   const userId = req.user._id;
