@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -5,6 +6,7 @@ const cors = require("cors");
 const app = express();
 
 app.use(cors());
+const { register, login } = require("./controllers/auth");
 
 const PORT = process.env.PORT || 3002;
 
@@ -16,6 +18,7 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // Routes
 const index = require("./routes/index");
@@ -25,6 +28,10 @@ app.use("/decluttr/api", index);
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
+app.post("/register", register);
+app.post("/signin", login);
+
+app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
