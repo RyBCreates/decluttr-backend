@@ -20,11 +20,6 @@ const userSchema = new mongoose.Schema({
       message: "Wrong Email format",
     },
   },
-  password: {
-    type: String,
-    required: true,
-    select: false, // do not return password field by default
-  },
   level: { type: String, enum: ["basic", "admin"], default: "basic" },
   xp: { type: Number, default: 0 },
   gems: { type: Number, default: 0 },
