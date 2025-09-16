@@ -1,4 +1,4 @@
-const bcryptb = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
@@ -50,3 +50,5 @@ const login = (req, res) => {
 };
 
 module.exports = { register, login };
+
+// Move file to middlewares folder (Fix imports using this file)

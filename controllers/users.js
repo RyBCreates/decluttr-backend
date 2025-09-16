@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
+
 // Get User by ID
 const getCurrentUser = (req, res) => {
   const userId = req.user._id;
@@ -33,3 +34,5 @@ const login = (req, res) => {
 };
 
 module.exports = { getCurrentUser, login };
+
+// Rename file to userController.js (Fix imports using this file)

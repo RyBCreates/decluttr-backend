@@ -1,0 +1,87 @@
+module.exports = [
+  {
+    _id: "clean-desk",
+    name: "Clean Desk",
+    reward: { gems: 10, xp: 10 },
+    icon: "🧹",
+  },
+  {
+    _id: "clean-park",
+    name: "Clean Park",
+    reward: { gems: 25, xp: 10 },
+    icon: "🏞️",
+  },
+  { _id: "laundry", name: "Laundry", reward: { gems: 10, xp: 10 }, icon: "🧺" },
+  {
+    _id: "clean-bathroom",
+    name: "Clean Bathroom",
+    reward: { gems: 15, xp: 10 },
+    icon: "🧴",
+  },
+  {
+    _id: "clean-kitchen",
+    name: "Clean Kitchen",
+    reward: { gems: 20, xp: 10 },
+    icon: "🍽️",
+  },
+  {
+    _id: "take-out-trash",
+    name: "Take out Trash",
+    reward: { gems: 15, xp: 10 },
+    icon: "🗑️",
+  },
+  {
+    _id: "mop-floors",
+    name: "Mop Floors",
+    reward: { gems: 10, xp: 10 },
+    icon: "🧹",
+  },
+  {
+    _id: "dust-surfaces",
+    name: "Dust Surfaces",
+    reward: { gems: 20, xp: 10 },
+    icon: "🧽",
+  },
+  {
+    _id: "wipe-windows",
+    name: "Wipe Windows",
+    reward: { gems: 20, xp: 10 },
+    icon: "🧽",
+  },
+  {
+    _id: "clean-fridge",
+    name: "Clean Fridge",
+    reward: { gems: 25, xp: 10 },
+    icon: "🧊",
+  },
+  {
+    _id: "organize-closet",
+    name: "Organize Closet",
+    reward: { gems: 20, xp: 10 },
+    icon: "👚",
+  },
+  {
+    _id: "sweep-porch",
+    name: "Sweep Porch",
+    reward: { gems: 10, xp: 10 },
+    icon: "🧹",
+  },
+  {
+    _id: "change-bed-sheets",
+    name: "Change Bed Sheets",
+    reward: { gems: 10, xp: 10 },
+    icon: "🛏️",
+  },
+  {
+    _id: "clean-microwave",
+    name: "Clean Microwave",
+    reward: { gems: 10, xp: 10 },
+    icon: "🧼",
+  },
+  {
+    _id: "take-out-recycling",
+    name: "Take out Recycling",
+    reward: { gems: 5, xp: 10 },
+    icon: "♻️",
+  },
+];
