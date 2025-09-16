@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 2,
-    maxlenght: 30,
+    maxlength: 30,
   },
   email: {
     type: String,
@@ -20,19 +20,17 @@ const userSchema = new mongoose.Schema({
       message: "Wrong Email format",
     },
   },
-  level: { type: String, enum: ["basic", "admin"], default: "basic" },
+  password: { type: String, required: true, select: false },
+
+  level: { type: Number, default: 1 },
   xp: { type: Number, default: 0 },
   gems: { type: Number, default: 0 },
   streak: { type: Number, default: 0 },
-  password: { type: String, required: true, select: false },
 });
 
-userSchema.statics.findUserByCredentials = function findUserByCredentials(
-  email,
-  password
-) {
+userSchema.statics.findUserByCredentials = function(email, password) {
   return this.findOne({ email })
-    .select("password")
+    .select("+password")
     .then((user) => {
       if (!user) {
         return Promise.reject(new Error("Incorrect email or password"));

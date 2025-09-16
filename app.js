@@ -3,10 +3,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+const { loginUser, createUser } = require("./controllers/users");
+
 const app = express();
 
 app.use(cors());
-const { register, login } = require("./controllers/auth");
 
 const PORT = process.env.PORT || 3002;
 
@@ -28,8 +29,8 @@ app.use("/decluttr/api", index);
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
-app.post("/register", register);
-app.post("/signin", login);
+app.post("/register", createUser);
+app.post("/login", loginUser);
 
 app.use(express.static(path.join(__dirname, "public")));
 
