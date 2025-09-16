@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 
+// For validation of singular emoji
+const emojiRegex = /\p{Emoji}/u;
+
 const taskSchema = new mongoose.Schema({
+  _id: { type: String, required: true },
   name: {
     type: String,
     required: true,
@@ -15,7 +19,8 @@ const taskSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(value) {
-        return validator.isURL(value);
+        // (Maybe switch to JUST urls in future)
+        return validator.isURL(value) || emojiRegex.test(value);
       },
       message: "Not a valid URL!",
     },

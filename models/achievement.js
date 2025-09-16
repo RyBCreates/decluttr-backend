@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
 
 const achievementSchema = new mongoose.Schema({
+  _id: { type: String, required: true },
   name: {
+    type: String,
+    required: true,
+  },
+  type: {
     type: String,
     required: true,
   },
@@ -14,8 +19,8 @@ const achievementSchema = new mongoose.Schema({
     required: true,
   },
   reward: {
-    type: String,
-    required: true,
+    gems: { type: Number, default: 0 },
+    badge: { type: String, default: null },
   },
 });
 
