@@ -6,6 +6,7 @@ async function seedBadges() {
     for (const badge of badges) {
       await Badge.findByIdAndUpdate(badge._id, badge, {
         upsert: true,
+        new: true,
       });
     }
 
