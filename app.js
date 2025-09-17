@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const { loginUser, createUser } = require("./controllers/users");
+const { loginUser, createUser } = require("./controllers/usersController");
 
 const app = express();
 

@@ -48,25 +48,20 @@ const createUser = (req, res) => {
 const loginUser = (req, res) => {
   const { email, password } = req.body;
 
-  User.findOne({ email })
-    .select("+password")
+  User.findUserByCredentials(email, password)
     .then((user) => {
-      if (!user) throw new Error("Incorrect email or password");
-
-      return bcrypt.compare(password, user.password).then((matched) => {
-        if (!matched) throw new Error("Incorrect email or password");
-
-        // Create JWT token
-        const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
-          expiresIn: "7d",
-        });
-        const userWithoutPassword = user.toObject();
-        delete userWithoutPassword.password;
-
-        res.send({ token, user: userWithoutPassword });
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+        expiresIn: "7d",
       });
+
+      const userWithoutPassword = user.toObject();
+      delete userWithoutPassword.password;
+
+      res.send({ token, user: userWithoutPassword });
     })
-    .catch((err) => res.status(401).send({ message: err.message }));
+    .catch(() => {
+      res.status(401).send({ message: "Incorrect email or password" });
+    });
 };
 
 // Update current user
