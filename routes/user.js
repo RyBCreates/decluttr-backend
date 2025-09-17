@@ -3,7 +3,10 @@ const router = express.Router();
 
 const auth = require("../middlewares/auth");
 
-const { getCurrentUser, updateCurrentUser } = require("../controllers/users");
+const {
+  getCurrentUser,
+  updateCurrentUser,
+} = require("../controllers/usersController");
 
 router.get("/me", auth, getCurrentUser);
 router.patch("/me", auth, updateCurrentUser);
