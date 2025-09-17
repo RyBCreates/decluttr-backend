@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const userAchievementSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   achievementId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "Achievement",
     required: true,
   },
