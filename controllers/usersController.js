@@ -81,9 +81,26 @@ const updateCurrentUser = (req, res) => {
     .catch((err) => res.status(400).send({ message: "Invalid data" }));
 };
 
+const updateUserStats = (req, res) => {
+  const userId = req.user._id;
+  const { xp, level, gems, streak } = req.body;
+
+  User.findByIdAndUpdate(
+    userId,
+    { xp, level, gems, streak },
+    { new: true, runValidators: true }
+  )
+    .then((user) => {
+      if (!user) return res.status(404).send({ message: "User not found" });
+      res.send(user);
+    })
+    .catch((err) => res.status(400).send({ message: "Invalid data" }));
+};
+
 module.exports = {
   getCurrentUser,
   createUser,
   loginUser,
   updateCurrentUser,
+  updateUserStats,
 };
