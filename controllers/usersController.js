@@ -1,7 +1,11 @@
-const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
 const { JWT_SECRET } = require("../utils/config");
+
+const User = require("../models/user");
+const Achievement = require("../models/achievement");
+const UserAchievement = require("../models/userAchievement");
 
 // Get current user
 const getCurrentUser = (req, res) => {
@@ -16,32 +20,54 @@ const getCurrentUser = (req, res) => {
 };
 
 // Create a new User (register)
-const createUser = (req, res) => {
-  const { username, avatar, email, password } = req.body;
+const createUser = async (req, res) => {
+  try {
+    const { username, avatar, email, password } = req.body;
 
-  bcrypt
-    .hash(password, 10)
-    .then((hash) =>
-      User.create({
-        username,
-        avatar,
-        email,
-        password: hash,
-      })
-    )
-    .then((user) => {
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
-        expiresIn: "7d",
-      });
-      const userWithoutPassword = user.toObject();
-      delete userWithoutPassword.password;
-      res.status(201).send({ token, user: userWithoutPassword });
-    })
-    .catch((err) => {
-      if (err.code === 11000)
-        return res.status(409).send({ message: "Email already exists" });
-      res.status(400).send({ message: "Invalid data" });
+    const hash = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      username,
+      avatar,
+      email,
+      password: hash,
     });
+
+    const achievements = await Achievement.find();
+
+    const userAchievements = achievements.map((achievement) => ({
+      userId: user._id,
+      achievementId: achievement._id,
+      progress: 0,
+      completed: false,
+    }));
+
+    await UserAchievement.insertMany(userAchievements);
+
+    const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    const userWithoutPassword = user.toObject();
+    delete userWithoutPassword.password;
+
+    res.status(201).send({
+      token,
+      user: userWithoutPassword,
+      // Mainly for visualization, can be taken out when everything works
+      achievements: userAchievements.map((ua) => ({
+        _id: ua._id,
+        achievement: ua.achievementId,
+        progress: ua.progress,
+        completed: ua.completed,
+      })),
+    });
+  } catch (err) {
+    console.error("Error in createUser:", err);
+    if (err.code === 11000)
+      return res.status(409).send({ message: "Email already exists" });
+    res.status(400).send({ message: "Invalid data" });
+  }
 };
 
 // Login user

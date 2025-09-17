@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
       message: "Wrong Email format",
     },
   },
+  avatar: {
+    type: String,
+    default: null,
+  },
   password: { type: String, required: true, select: false },
 
   level: { type: Number, default: 1 },
