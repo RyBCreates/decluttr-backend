@@ -16,6 +16,14 @@ module.exports = [
     reward: { gems: 25 },
   },
   {
+    _id: "cluttr-cuttr",
+    name: "Cluttr Cuttr",
+    type: "task_count",
+    task: "Finish 1 task",
+    goal: 1,
+    reward: { badge: "Cluttr Cuttr" },
+  },
+  {
     _id: "clean-sweep",
     name: "Clean Sweep",
     type: "task_count",
