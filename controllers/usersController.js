@@ -8,6 +8,8 @@ const Achievement = require("../models/achievement");
 const UserAchievement = require("../models/userAchievement");
 const Badge = require("../models/badge");
 const UserBadge = require("../models/userBadge");
+const ShopItem = require("../models/shopItem");
+const UserItem = require("../models/userItem");
 
 // Get current user
 const getCurrentUser = (req, res) => {
@@ -56,6 +58,15 @@ const createUser = async (req, res) => {
 
     await UserBadge.insertMany(userBadges);
 
+    const shopItems = await ShopItem.find();
+    const userItems = shopItems.map((item) => ({
+      userId: user._id,
+      itemId: item._id,
+      quantity: 0,
+      acquiredAt: null,
+    }));
+    await UserItem.insertMany(userItems);
+
     const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
       expiresIn: "7d",
     });
@@ -77,6 +88,12 @@ const createUser = async (req, res) => {
         _id: ub._id,
         badge: ub.badgeId,
         unlocked: ub.unlocked,
+      })),
+      items: userItems.map((ui) => ({
+        _id: ui._id,
+        item: ui.shopItemId,
+        quantity: ui.quantity,
+        acquiredAt: ui.acquiredAt,
       })),
     });
   } catch (err) {
