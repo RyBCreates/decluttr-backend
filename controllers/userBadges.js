@@ -15,7 +15,8 @@ const getUserBadges = async (req, res) => {
 
 // Change unlock status of a User's Badge
 const unlockBadge = async (req, res) => {
-  const { userId, badgeId } = req.body;
+  const userId = req.user._id;
+  const { badgeId } = req.params;
 
   try {
     const badge = await UserBadge.findOne({ userId, badgeId });
