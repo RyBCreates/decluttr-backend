@@ -7,6 +7,6 @@ const {
 } = require("../controllers/userAchievements");
 
 router.get("/me", auth, getUserAchievements);
-router.patch("/increment", auth, incrementAchievementProgress);
+router.patch("/increment/:achievementId", auth, incrementAchievementProgress);
 
 module.exports = router;

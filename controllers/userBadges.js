@@ -1,7 +1,22 @@
 const UserBadge = require("../models/userBadge");
 
+// Get all of the User's Badges
+const getUserBadges = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const userBadges = await UserBadge.find({ userId }).populate("badgeId");
+
+    res.send(userBadges);
+  } catch (err) {
+    console.error("Error fetching badges:", err);
+    res.status(500).send({ message: "Server error" });
+  }
+};
+
+// Change unlock status of a User's Badge
 const unlockBadge = async (req, res) => {
-  const { userId, badgeId } = req.body;
+  const userId = req.user._id;
+  const { badgeId } = req.params;
 
   try {
     const badge = await UserBadge.findOne({ userId, badgeId });
@@ -22,3 +37,5 @@ const unlockBadge = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+module.exports = { unlockBadge, getUserBadges };

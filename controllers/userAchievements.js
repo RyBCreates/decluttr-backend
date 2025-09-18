@@ -16,7 +16,8 @@ getUserAchievements = async (req, res) => {
 
 // Increment progress on a specific achievement
 incrementAchievementProgress = async (req, res) => {
-  const { achievementId, amount = 1 } = req.body;
+  const achievementId = req.params.achievementId;
+  const amount = req.body.amount || 1;
 
   try {
     let userAchievement = await UserAchievement.findOne({
