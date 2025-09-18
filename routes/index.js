@@ -8,6 +8,7 @@ const userAchievementsRouter = require("./userAchievements");
 const badgeRouter = require("./badges");
 const userBadgesRouter = require("./userBadges");
 const shopItemRouter = require("./shopItems");
+const userItemsRouter = require("./userItems");
 
 router.use("/users", userRouter);
 router.use("/tasks", taskRouter);
@@ -16,5 +17,6 @@ router.use("/user-achievements", userAchievementsRouter);
 router.use("/badges", badgeRouter);
 router.use("/user-badges", userBadgesRouter);
 router.use("/shop-items", shopItemRouter);
+router.use("/user-items", userItemsRouter);
 
 module.exports = router;
