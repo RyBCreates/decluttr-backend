@@ -6,6 +6,8 @@ const { JWT_SECRET } = require("../utils/config");
 const User = require("../models/user");
 const Achievement = require("../models/achievement");
 const UserAchievement = require("../models/userAchievement");
+const Badge = require("../models/badge");
+const UserBadge = require("../models/userBadge");
 
 // Get current user
 const getCurrentUser = (req, res) => {
@@ -16,7 +18,7 @@ const getCurrentUser = (req, res) => {
       if (!user) return res.status(404).send({ message: "User not found" });
       res.send(user);
     })
-    .catch((err) => res.status(500).send({ message: "Server error" }));
+    .catch((err) => res.status(500).send({ err, message: "Server error" }));
 };
 
 // Create a new User (register)
@@ -44,6 +46,16 @@ const createUser = async (req, res) => {
 
     await UserAchievement.insertMany(userAchievements);
 
+    const badges = await Badge.find();
+
+    const userBadges = badges.map((badge) => ({
+      userId: user._id,
+      badgeId: badge._id,
+      unlocked: false,
+    }));
+
+    await UserBadge.insertMany(userBadges);
+
     const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
       expiresIn: "7d",
     });
@@ -60,6 +72,11 @@ const createUser = async (req, res) => {
         achievement: ua.achievementId,
         progress: ua.progress,
         completed: ua.completed,
+      })),
+      badges: userBadges.map((ub) => ({
+        _id: ub._id,
+        badge: ub.badgeId,
+        unlocked: ub.unlocked,
       })),
     });
   } catch (err) {
@@ -104,7 +121,7 @@ const updateCurrentUser = (req, res) => {
       if (!user) return res.status(404).send({ message: "User not found" });
       res.send(user);
     })
-    .catch((err) => res.status(400).send({ message: "Invalid data" }));
+    .catch((err) => res.status(400).send({ err, message: "Invalid data" }));
 };
 
 const updateUserStats = (req, res) => {
