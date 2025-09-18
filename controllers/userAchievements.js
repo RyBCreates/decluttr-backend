@@ -2,7 +2,7 @@ const Achievement = require("../models/achievement");
 const UserAchievement = require("../models/userAchievement");
 
 // Get all achievements with progress for the current user
-async function getUserAchievements(req, res) {
+getUserAchievements = async (req, res) => {
   try {
     const achievements = await UserAchievement.find({
       userId: req.user._id,
@@ -12,10 +12,10 @@ async function getUserAchievements(req, res) {
     console.error(err);
     res.status(500).send({ message: "Failed to fetch user achievements" });
   }
-}
+};
 
 // Increment progress on a specific achievement
-async function incrementAchievementProgress(req, res) {
+incrementAchievementProgress = async (req, res) => {
   const { achievementId, amount = 1 } = req.body;
 
   try {
@@ -50,6 +50,6 @@ async function incrementAchievementProgress(req, res) {
     console.error(err);
     res.status(500).send({ message: "Failed to update achievement progress" });
   }
-}
+};
 
 module.exports = { getUserAchievements, incrementAchievementProgress };
