@@ -12,7 +12,8 @@ app.use(cors());
 
 const PORT = process.env.PORT || 3002;
 
-const MONGODB_URI = "mongodb://127.0.0.1:27017/decluttr";
+const MONGODB_URI =
+  process.env.MONGO_URI || "mongodb://127.0.0.1:27017/decluttr";
 
 mongoose
   .connect(MONGODB_URI, {})
